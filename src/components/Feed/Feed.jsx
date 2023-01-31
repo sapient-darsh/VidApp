@@ -32,7 +32,6 @@ const Feed = () => {
             >
                 Copyright 2023
             </Typography>
-
         </Box>
 
     </Stack>

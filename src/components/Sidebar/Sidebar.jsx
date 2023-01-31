@@ -9,6 +9,7 @@ const Sidebar = () => (
     <Stack
         direction="row"
         sx={{
+            
             overflowY: "auto",
             height: { sx: "auto", md: "95%" },
             flexDirection: { md: "column" },
@@ -19,7 +20,8 @@ const Sidebar = () => (
             className="category-btn"   
             style={{
                 background: category.name === selectedCategory && '#FC1503',
-                color:'white'
+                color:'white',
+                marginRight:'20px',
             }}           
             key={category.name}
             >
