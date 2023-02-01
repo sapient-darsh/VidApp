@@ -3,7 +3,7 @@ import { Stack, Box } from '@mui/material'
 
 import { VideoCard, ChannelCard } from '../../components'
 
-const Videos = ({ videos }) => {
+const Videos = ({ videos, direction }) => {
 
   console.log(videos)
 
@@ -13,7 +13,7 @@ const Videos = ({ videos }) => {
 
   return (
     <Stack
-      direction="row"
+      direction={direction || "row"}
       flexWrap="wrap"
       justifyContent="start"
       gap={2}
