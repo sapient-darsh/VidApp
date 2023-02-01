@@ -1,91 +1,82 @@
-import { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Stack, Typography } from '@mui/material'
 
 import { fetchAPI } from '../../utils/fetchAPI';
-import { Sidebar, Videos} from '../../components'
+import { Sidebar, Videos } from '../../components'
 
 
 const Feed = () => {
 
-    const [selectedCategory, setSelectedCategory] = useState('New');
-    const [videos, setVideos] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("New");
+    const [videos, setVideos] = useState(null);
 
-    useEffect(()=>{
-        fetchAPI(`search?part=snippet&q=${selectedCategory}&maxResults=50`)
-        .then((data)=> {
-            console.log(data);
-            setVideos(data.items)
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    },[selectedCategory]);
+    useEffect(() => {
+        setVideos(null);
 
-    
-  return (
-    <Stack sx={{
-        flexDirection: {
-            sx:"column",
-            md: "row"
-        }
-    }}>
-        <Box sx={{
-            height: {
-                sx:'auto',
-                md:'92vh',
-            },
-            borderRight: '1px solid #3d3d3d',
-            px : {
-                sx:0,
-                md:2
+        fetchAPI(`search?part=snippet&q=${selectedCategory}`)
+            .then((data) => setVideos(data.items))
+    }, [selectedCategory]);
+
+
+    return (
+        <Stack sx={{
+            flexDirection: {
+                sx: "column",
+                md: "row"
             }
         }}>
-            <Sidebar 
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-            />
+            <Box sx={{
+                height: {
+                    sx: 'auto',
+                    md: '92vh',
+                },
+                borderRight: '0px solid #3d3d3d',
+                boxShadow: '#3d3d3d 0px 0px 10px 0px',
+                px: {
+                    sx: 0,
+                    md: 2
+                }
+            }}>
+                <Sidebar
+                    selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}
+                />
 
 
-            <Typography 
-                className="copyright"
-                variant="body2"
+                <Typography
+                    className="copyright"
+                    variant="body2"
+                    sx={{
+                        mt: 1.5,
+                        color: '#fff'
+                    }}
+                >
+                    Copyright 2023
+                </Typography>
+            </Box>
+
+            <Box
+                p={2}
                 sx={{
-                    mt:1.5,
-                    color:'#fff'
+                    overflowY: "auto",
+                    height: '90vh',
+                    flex: 2,
                 }}
             >
-                Copyright 2023
-            </Typography>
-        </Box>
+                <Typography
+                    variant="h4"
+                    fontWeight="bold"
+                    mb={2}
+                    sx={{
+                        color: 'white '
+                    }}
+                >
+                    {selectedCategory} <span style={{ color: "#FC1503" }}>videos</span>
+                </Typography>
 
-        <Box 
-            p={2}
-            sx={{
-                overflowY:"auto",
-                height:'90vh',
-                flex:2,
-            }}
-        >
-            <Typography
-                variant="h4"
-                fontWeight="bold"
-                mb={2}
-                sx={{
-                    color:'white '
-                }}
-            >
-                {selectedCategory} 
-                <span style={{
-                    color:"#F31503",
-                }}>
-                    Videos
-                </span>
-            </Typography>
-
-            <Videos videos={videos}/>
-        </Box>
-    </Stack>
-  )
+                <Videos videos={videos} />
+            </Box>
+        </Stack>
+    )
 }
 
 export default Feed
